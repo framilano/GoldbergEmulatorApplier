@@ -37,4 +37,7 @@ def main():
     shutil.rmtree(getcwd()+"/goldberg_folder", ignore_errors=True)
     remove(getcwd()+"/latest.zip")
 
+    tp.colored_print("Goldberg Emulator installed successfully!", fg_color=2)
+    input("Press Enter to close this prompt")
+
 if (__name__ == "__main__"): main()
