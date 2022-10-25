@@ -6,7 +6,9 @@ def get_dlcs(app_id):
     response = requests.get(f"https://store.steampowered.com/api/appdetails/?appids={app_id}")
     response_json = response.json()
 
-    dlcs_ids = response_json[app_id]['data']['dlc']
+    dlcs_ids = []
+    if ("dlc" in response_json[app_id]['data']):
+        dlcs_ids = response_json[app_id]['data']['dlc']
 
     dlcs = {}
     for id in dlcs_ids:
