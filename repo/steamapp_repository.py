@@ -27,10 +27,14 @@ def get_game_data(app_id):
     
     if (len(response_json) == 0): return None
 
-    game_data = {
-        "name": response_json['game']['gameName'],
-        "achievements": response_json['game']['availableGameStats']['achievements'],
-        "dlcs": get_dlcs(str(app_id)),
-    }
+    #Game has been removed from Steam, response is valid but data are not
+    try:
+        game_data = {
+            "name": response_json['game']['gameName'],
+            "achievements": response_json['game']['availableGameStats']['achievements'],
+            "dlcs": get_dlcs(str(app_id)),
+        }
+        return game_data
+    except(KeyError):
+        return "invalid_game_data"
 
-    return game_data

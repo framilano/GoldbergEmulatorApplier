@@ -14,20 +14,25 @@ def main():
     game_data = None
     app_id = ""
     tp.colored_print("Find your game Steam APP ID here: https://steamdb.info/", format="Bold")
+    
+    invalid_game_data = False
     while (game_data is None):
         app_id = input(tp.colored_sprint("Insert game Steam APP ID: ", format="Bold"))
         game_data = get_game_data(app_id=app_id)
+        if (game_data == "invalid_game_data"): 
+            tp.colored_print("This game doesn't appear to have valid game datas, skipping achievements and DLCs retrieval")
+            invalid_game_data = True
         if (game_data is None): tp.colored_print("This APP ID doesn't exist, try again", fg_color=1)
     
-    tp.colored_print(f"Name: {game_data['name']}\nDLCs: {len(game_data['dlcs'])}\nAchievements: {len(game_data['achievements'])}", format="Underline")
 
     goldberg_service.replace_dll()
 
     goldberg_service.generate_steam_appid_txt(app_id)
 
-    goldberg_service.unlock_dlcs(game_data['dlcs'])
-
-    goldberg_service.achievements(game_data['achievements'])
+    if (not invalid_game_data):
+        tp.colored_print(f"Name: {game_data['name']}\nDLCs: {len(game_data['dlcs'])}\nAchievements: {len(game_data['achievements'])}", format="Underline")
+        goldberg_service.unlock_dlcs(game_data['dlcs'])
+        goldberg_service.achievements(game_data['achievements'])
     
     goldberg_service.offline_mode()
 
