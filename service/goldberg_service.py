@@ -14,11 +14,7 @@ def replace_dll():
         dll_path = input(tp.colored_sprint("Drop game steam_api.dll/steam_api64.dll on the command prompt:\n", format="Bold"))
         
         #Removing file name from path
-        dll_path = dll_path.split('\\')
-        dll_path.pop()
-        for i in range(0, len(dll_path)-1):
-            dll_path[i] += '\\'
-        dll_path = ''.join(dll_path).replace("\"", '')
+        dll_path = dll_path.replace("steam_api.dll", "").replace("steam_api64.dll", "")
         
         #Checking if folder contains steam_api.dll
         for file in os.listdir(dll_path):
